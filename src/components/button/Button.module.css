@@ -1,0 +1,26 @@
+.button {
+    height: 30px;
+    width: 80px;
+    border: 0px;
+    margin: 0 0 0 10px;
+    background-color: aquamarine;
+    color: darkslategray;
+    border-radius: 5px;
+    font-size: 15pt;
+}
+
+.disabled {
+    background-color: darkcyan;
+}
+
+.button:hover {
+    background-color: aqua;
+}
+
+.disabled:hover {
+    background-color: darkcyan;
+}
+
+.button:active {
+    background-color: darkturquoise;
+}

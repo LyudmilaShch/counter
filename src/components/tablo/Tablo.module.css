@@ -1,0 +1,12 @@
+.number {
+    background-color: aquamarine;
+    width: 300px;
+    height: 100px;
+    color: black;
+    font-size: 50pt;
+    border-radius: 10px;
+}
+
+.error {
+    color: crimson;
+}
