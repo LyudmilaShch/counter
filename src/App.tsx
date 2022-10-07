@@ -5,23 +5,26 @@ import {Button} from "./components/button/Button";
 
 function App() {
 
-    let [number, setNumber] = useState(0)
+    const MAXNUMBER = 5
+    const STARTNUMBER = 0
+    const STEP = 1
+    const [number, setNumber] = useState<number>(STARTNUMBER)
     const onClickInc = () => {
-        setNumber(++number)
+        if (number < MAXNUMBER && number >= STARTNUMBER) {
+            setNumber(number => number + STEP)
+        }
     }
     const onClickReset = () => {
-        setNumber(0)
+        setNumber(STARTNUMBER)
     }
 
     return (
         <body>
         <div className="App">
-            <div>
-                <Tablo number={number}/>
-                <div className={"ButtonsContainer"}>
-                    <Button name={'inc'} callBack={onClickInc} disabledButton={number >= 5}/>
-                    <Button name={'reset'} callBack={onClickReset} disabledButton={number === 0}/>
-                </div>
+            <Tablo number={number} maxNumber={MAXNUMBER}/>
+            <div className="ButtonsContainer">
+                <Button name={'inc'} callBack={onClickInc} disabledButton={number >= MAXNUMBER}/>
+                <Button name={'reset'} callBack={onClickReset} disabledButton={number === STARTNUMBER}/>
             </div>
         </div>
         </body>

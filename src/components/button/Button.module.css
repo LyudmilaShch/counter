@@ -24,3 +24,6 @@
 .button:active {
     background-color: darkturquoise;
 }
+.disabled:active {
+    background-color: darkcyan;
+}
