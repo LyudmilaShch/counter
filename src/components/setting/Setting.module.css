@@ -1,16 +1,10 @@
-.tablo {
+.number {
     background-color: aquamarine;
     width: 300px;
     height: 100px;
     color: black;
-    border-radius: 10px;
-}
-
-.number {
     font-size: 50pt;
-}
-.string {
-    font-size: 14pt;
+    border-radius: 10px;
 }
 
 .error {
