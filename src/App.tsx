@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Tablo} from "./components/tablo/Tablo";
 import {Button} from "./components/button/Button";
@@ -12,6 +12,25 @@ function App() {
     const [startValue, setStartValue] = useState(0)
     const [number, setNumber] = useState<number>(startValue)
     const STEP = 1
+    useEffect( () => {
+        let newMaxValue = localStorage.getItem('maxValueKey')
+        if (newMaxValue) {
+            setMaxValue(JSON.parse(newMaxValue))
+        }
+        let newStartValue = localStorage.getItem('startValueKey')
+        if (newStartValue) {
+            setStartValue(JSON.parse(newStartValue))
+            setNumber(JSON.parse(newStartValue))
+        }
+    }, [] )
+    // useEffect( () => {
+    //     localStorage.setItem('startValueKey', JSON.stringify(startValue))
+    // }, [startValue] )
+    // useEffect( () => {
+    //     localStorage.setItem('maxValueKey', JSON.stringify(maxValue))
+    // }, [maxValue] )
+
+
 
     const onClickInc = () => {
         if (number < maxValue && number >= startValue) {
@@ -25,6 +44,8 @@ function App() {
         setError(null)
         setMessage(null)
         onClickReset()
+        localStorage.setItem('startValueKey', JSON.stringify(startValue))
+        localStorage.setItem('maxValueKey', JSON.stringify(maxValue))
     }
     const changeMaxValue = (newMaxValue: number) => {
         setMessage(null)
