@@ -4,78 +4,73 @@ import {Tablo} from "./components/tablo/Tablo";
 import {Button} from "./components/button/Button";
 import {Setting} from "./components/setting/Setting";
 
+
 function App() {
     const [error, setError] = useState<string | null>(null)
     const [message, setMessage] = useState<string | null>(null)
     const [maxValue, setMaxValue] = useState(5)
-    const [newMaxValue, setNewMaxValue] = useState(maxValue)
     const [startValue, setStartValue] = useState(0)
-    const [newStart, setNewStart] = useState(startValue)
-    const STEP = 1
     const [number, setNumber] = useState<number>(startValue)
+    const STEP = 1
+
     const onClickInc = () => {
         if (number < maxValue && number >= startValue) {
-
             setNumber(number => number + STEP)
         }
     }
     const onClickReset = () => {
         setNumber(startValue)
-        }
-
+    }
     const onClickSet = () => {
-        setMaxValue(newMaxValue)
-        setStartValue(newStart)
-        onClickReset()
+        setError(null)
         setMessage(null)
+        onClickReset()
     }
-
-
     const changeMaxValue = (newMaxValue: number) => {
-        setNewMaxValue(newMaxValue)
-
-        // setMessage("Нажмите set")
-        // if (newMaxValue > 0 && newMaxValue > newStart && newMaxValue !== newStart) {
-        //     setError(null)
-        //     setNewMaxValue(newMaxValue)
-        // } else {
-        //     setError('error')
-        // }
+        setMessage(null)
+        setMaxValue(newMaxValue)
+        newMaxValue > startValue
+            ? setMessage("Введите значение и нажмите set")
+            : setError("Стартовое значение не может быть больше или равен максимальному")
     }
+
     const changeStartValue = (newStartValue: number) => {
-        setNewStart(newStartValue)
-
-
-        // setMessage("Нажмите set")
-        // if (newStartValue > 0 && newStartValue < newMaxValue && newStartValue !== newMaxValue) {
-        //     setError(null)
-        //     setNewStart(newStartValue)
-        // } else {
-        //     setError('error')
-        // }
+        setMessage(null)
+        setStartValue(newStartValue)
+        maxValue > newStartValue
+            ? setMessage("Введите значение и нажмите set")
+            : setError("Стартовое значение не может быть больше или равен максимальному")
     }
-const showError = (error:string | null) => {
-    setError(error)
-}
+
+    const showError = (error: string | null) => {
+        setError(error)
+    }
+
+    const displayValueOnTablo = error
+        ? error
+        : message ? message : number
+
 
     return (
         <body>
         <div className="Setting">
-            <Setting changeMaxValue={changeMaxValue} changeStartValue={changeStartValue} showError={showError} error={error}/>
-
+            <Setting changeMaxValue={changeMaxValue} changeStartValue={changeStartValue}
+                     showError={showError}
+                     maxValue={maxValue}
+                     startValue={startValue}
+                     error={error}
+            />
             <div className="ButtonsContainer">
-                <Button name={'set'} callBack={onClickSet} disabledButton={error ? true : false}/>
+                <Button name={'set'} callBack={onClickSet} disabledButton={!!error}/>
             </div>
         </div>
         <div className="Tablo">
-            <Tablo tablo={error
-                ? error
-                : message
-                    ? message
-                    : number} maxValue={maxValue}/>
+            <Tablo tablo={displayValueOnTablo} maxValue={maxValue} isError={!!error}/>
             <div className="ButtonsContainer">
-                <Button name={'inc'} callBack={onClickInc} disabledButton={number >= maxValue}/>
-                <Button name={'reset'} callBack={onClickReset} disabledButton={number === startValue}/>
+                <Button name={'inc'} callBack={onClickInc}
+                        disabledButton={error ? true : message ? true : number >= maxValue}/>
+                <Button name={'reset'} callBack={onClickReset}
+                        disabledButton={error ? true : message ? true : number === startValue}/>
             </div>
         </div>
         </body>

@@ -1,18 +1,17 @@
 .tablo {
     background-color: aquamarine;
-    width: 300px;
+    width: 320px;
     height: 100px;
     color: black;
     border-radius: 10px;
 }
-
 .number {
     font-size: 50pt;
 }
 .string {
     font-size: 14pt;
+    word-wrap: break-word;
 }
-
 .error {
     color: crimson;
 }

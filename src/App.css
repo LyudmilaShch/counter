@@ -6,14 +6,14 @@ body {
 .Tablo {
     position: absolute;
     top: 250px;
-    left: 200px;
+    left: 50%;
     margin-right: -50%;
     transform: translate(-50%, 50%);
     background-color: darkslategray;
     text-align: center;
     border: 3px solid aquamarine;
-    max-width: 300px;
-    max-height: 200px;
+    width: 320px;
+    height: 200px;
     padding: 20px;
     border-radius: 10px;
 }
@@ -27,8 +27,8 @@ body {
 
 .Setting {
     position: absolute;
-    top: 10px;
-    left: 200px;
+    top: 6px;
+    left: 50%;
     margin-right: -50%;
     transform: translate(-50%, 50%);
     background-color: darkslategray;

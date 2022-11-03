@@ -1,42 +1,31 @@
-import React, {ChangeEvent, useState} from 'react';
-import s from './Setting.module.css';
-import {Value} from "../NewValue/Value";
-import {log} from "util";
+import React, {useState} from 'react';
+import {Value} from "../value/Value";
+
+
 
 type SettingPropsType = {
-    changeMaxValue: (newMaxValue: number) => void
-    changeStartValue: (newStartValue: number) => void
+    changeMaxValue: (newValue: number) => void
+    changeStartValue: (newValue: number) => void
     showError: (error: string | null) => void
+    maxValue: number
+    startValue: number
     error: string | null
 }
 
 export const Setting = (props: SettingPropsType) => {
-    const [newMaxValue, setNewMaxValue] = useState(0)
-    const [newStartValue, setNewStartValue] = useState(0)
-    const [error, setError] = useState<string | null>(props.error)
-
     const changeMaxValue = (newValue: number) => {
-        setNewMaxValue(newValue)
         props.changeMaxValue(newValue)
     }
-
     const changeStartValue = (newValue: number) => {
-        setNewStartValue(newValue)
         props.changeStartValue(newValue)
     }
-
-    const showError = (error:string | null) => {
-        setError(error)
-        props.showError(error)
-    }
-
 
     return (
         <div>
             <div>max value</div>
-            <Value newValue={changeMaxValue} showError={showError} error={error}/>
+            <Value newValue={changeMaxValue} value={props.maxValue} error={props.error} showError={props.showError}/>
             <div>start value</div>
-            <Value newValue={changeStartValue} showError={showError} error={error}/>
+            <Value newValue={changeStartValue} value={props.startValue} error={props.error} showError={props.showError}/>
         </div>
     )
 }
