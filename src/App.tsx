@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Tablo} from "./components/tablo/Tablo";
 import {Button} from "./components/button/Button";
-import {Setting} from "./components/setting/Setting";
+import {Value} from "./components/value/Value";
 
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
     const [startValue, setStartValue] = useState(0)
     const [number, setNumber] = useState<number>(startValue)
     const STEP = 1
-    useEffect( () => {
+    useEffect(() => {
         let newMaxValue = localStorage.getItem('maxValueKey')
         if (newMaxValue) {
             setMaxValue(JSON.parse(newMaxValue))
@@ -22,15 +22,7 @@ function App() {
             setStartValue(JSON.parse(newStartValue))
             setNumber(JSON.parse(newStartValue))
         }
-    }, [] )
-    // useEffect( () => {
-    //     localStorage.setItem('startValueKey', JSON.stringify(startValue))
-    // }, [startValue] )
-    // useEffect( () => {
-    //     localStorage.setItem('maxValueKey', JSON.stringify(maxValue))
-    // }, [maxValue] )
-
-
+    }, [])
 
     const onClickInc = () => {
         if (number < maxValue && number >= startValue) {
@@ -48,19 +40,30 @@ function App() {
         localStorage.setItem('maxValueKey', JSON.stringify(maxValue))
     }
     const changeMaxValue = (newMaxValue: number) => {
+        setError(null)
         setMessage(null)
         setMaxValue(newMaxValue)
-        newMaxValue > startValue
-            ? setMessage("Введите значение и нажмите set")
-            : setError("Стартовое значение не может быть больше или равен максимальному")
+        if (newMaxValue >= 0) {
+            newMaxValue > startValue
+                ? setMessage("Введите значение и нажмите set")
+                : setError("Стартовое значение не может быть больше или равен максимальному")
+        } else {
+            setError("Значение должно быть больше или равно 0")
+        }
     }
 
     const changeStartValue = (newStartValue: number) => {
+        setError(null)
         setMessage(null)
         setStartValue(newStartValue)
-        maxValue > newStartValue
-            ? setMessage("Введите значение и нажмите set")
-            : setError("Стартовое значение не может быть больше или равен максимальному")
+        if (newStartValue >= 0) {
+            maxValue > newStartValue
+                ? setMessage("Введите значение и нажмите set")
+                : setError("Стартовое значение не может быть больше или равен максимальному")
+        } else {
+            setError("Значение должно быть больше или равно 0")
+        }
+
     }
 
     const showError = (error: string | null) => {
@@ -75,12 +78,25 @@ function App() {
     return (
         <body>
         <div className="Setting">
-            <Setting changeMaxValue={changeMaxValue} changeStartValue={changeStartValue}
-                     showError={showError}
-                     maxValue={maxValue}
-                     startValue={startValue}
-                     error={error}
+            <div className="nameInput">
+                <div><b>max value</b></div>
+                <Value newValue={changeMaxValue} value={maxValue} error={error}
+                       //showError={showError}
+                />
+            </div>
+            <div className="nameInput">
+                <div> <b>start value</b></div>
+            <Value newValue={changeStartValue} value={startValue} error={error}
+                   //showError={showError}
             />
+            </div>
+
+            {/*<Setting changeMaxValue={changeMaxValue} changeStartValue={changeStartValue}*/}
+            {/*         showError={showError}*/}
+            {/*         maxValue={maxValue}*/}
+            {/*         startValue={startValue}*/}
+            {/*         error={error}*/}
+            {/*/>*/}
             <div className="ButtonsContainer">
                 <Button name={'set'} callBack={onClickSet} disabledButton={!!error}/>
             </div>

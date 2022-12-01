@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Value} from "../value/Value";
 
 
@@ -22,10 +22,15 @@ export const Setting = (props: SettingPropsType) => {
 
     return (
         <div>
+
             <div>max value</div>
-            <Value newValue={changeMaxValue} value={props.maxValue} error={props.error} showError={props.showError}/>
+            <Value newValue={changeMaxValue} value={props.maxValue} error={props.error}
+                   //showError={props.showError}
+            />
             <div>start value</div>
-            <Value newValue={changeStartValue} value={props.startValue} error={props.error} showError={props.showError}/>
+            <Value newValue={changeStartValue} value={props.startValue} error={props.error}
+                   //showError={props.showError}
+            />
         </div>
     )
 }

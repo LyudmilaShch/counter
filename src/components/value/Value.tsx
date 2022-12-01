@@ -5,7 +5,7 @@ type SettingPropsType = {
     newValue: (newValue: number) => void
     value: number
     error: string | null
-    showError: (error: string | null) => void
+    //showError: (error: string | null) => void
 }
 
 export const Value = (props: SettingPropsType) => {
@@ -14,10 +14,8 @@ export const Value = (props: SettingPropsType) => {
     const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget.valueAsNumber >= 0) {
             setError(null)
-            props.showError(null)
         } else {
             setError("Значение должно быть больше 0")
-            props.showError("Значение должно быть больше 0")
         }
         props.newValue(e.currentTarget.valueAsNumber)
 
