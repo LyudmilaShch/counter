@@ -1,6 +1,5 @@
 import React, {ChangeEvent, useState} from 'react';
 import s from './Value.module.css';
-
 type SettingPropsType = {
     newValue: (newValue: number) => void
     value: number
@@ -9,17 +8,20 @@ type SettingPropsType = {
 }
 
 export const Value = (props: SettingPropsType) => {
+
     const [error, setError] = useState<string | null>(null)
 
     const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
+
+
         if (e.currentTarget.valueAsNumber >= 0) {
             setError(null)
         } else {
             setError("Значение должно быть больше 0")
         }
         props.newValue(e.currentTarget.valueAsNumber)
-
     }
+
     const InputClassName =
         error
             ? s.error

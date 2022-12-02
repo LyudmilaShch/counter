@@ -6,6 +6,7 @@ type changeIncActionType = ReturnType<typeof changeIncAC>
 type changeResetActionType = ReturnType<typeof changeResetAC>
 
 
+
 type ActionType =
     changeStartValueActionType
     | changeMaxValueActionType
@@ -17,7 +18,7 @@ type ActionType =
 
 const initialState = {
     startValue: 0,
-    maxValue: 5,
+    maxValue: 7,
     error: null,
     message: null,
     number: 0
@@ -25,7 +26,7 @@ const initialState = {
 
 export type InitialStateType = {
     startValue: number
-    maxValue: number
+    maxValue: any
     error: string | null
     message: string | null
     number: number
@@ -118,3 +119,34 @@ export const changeIncAC = () => {
 export const changeResetAC = () => {
     return {type: "CHANGE-RESET"} as const
 }
+
+
+export const loadState = () => {
+    try {
+        const newMaxValue = localStorage.getItem('maxValueKey');
+        if (newMaxValue) {
+            return JSON.parse(newMaxValue)
+
+        }
+        // let newStartValue = localStorage.getItem('startValueKey')
+        // if (newStartValue) {
+        //     return JSON.parse(newStartValue)
+        // }
+    } catch (err) {
+
+        return undefined;
+    }
+};
+
+export const saveState = (state: {maxValue: number, startValue: number} ) => {
+    try {
+        const newMaxValue = JSON.stringify(state.maxValue);
+        const newStartValue = JSON.stringify(state.startValue);
+        localStorage.setItem('maxValueKey', newMaxValue);
+        localStorage.setItem('startValueKey', newStartValue);
+    } catch {
+        // ignore write errors
+    }
+
+
+};

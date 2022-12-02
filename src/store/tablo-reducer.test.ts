@@ -1,4 +1,5 @@
-import {changeMaxValueAC, changeStartValueAC, InitialStateType, tabloReducer} from "./tablo-reducer";
+import {InitialStateType, tabloReducer} from "./tablo-reducer";
+import {changeMaxValueAC, changeStartValueAC} from "./tablo-reducer";
 
 let startState: InitialStateType
 beforeEach(() => {
@@ -12,7 +13,7 @@ beforeEach(() => {
 })
 
 test('start value should change', () => {
-    const endState = tabloReducer(startState,changeStartValueAC(2))
+    const endState = tabloReducer(startState, changeStartValueAC(2))
     expect(endState.startValue).toBe(2);
     expect(endState.error).toBe(null);
     expect(endState.message).toBe(null);
