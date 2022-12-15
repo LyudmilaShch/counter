@@ -9,12 +9,12 @@
 //     changeSettingAC,
 //     changeSettingValueAC,
 //     changeStartValueAC,
-//     tabloReducer
+//     counterReducer
 // } from "./store/tablo-reducer";
 //
 //
 function AppWithReducer() {
-//     const [tablo, dispatchToTablo] = useReducer(tabloReducer, {
+//     const [tablo, dispatchToTablo] = useReducer(counterReducer, {
 //         startValue: 0,
 //         maxValue: 5,
 //         error: null,

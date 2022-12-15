@@ -21,7 +21,7 @@ const initialState = {
     maxValue: 7,
     error: null,
     message: null,
-    number: 0
+    value: 0
 }
 
 export type InitialStateType = {
@@ -29,9 +29,9 @@ export type InitialStateType = {
     maxValue: any
     error: string | null
     message: string | null
-    number: number
+    value  : number
 }
-export const tabloReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
+export const counterReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
         case "CHANGE-START-VALUE": {
             return {
@@ -75,15 +75,16 @@ export const tabloReducer = (state: InitialStateType = initialState, action: Act
                 ...state,
                 error: null,
                 message: null,
-                number: state.startValue
+                value: state.startValue
                 // startValue: state.startValue
             }
         }
         case "CHANGE-INC": {
-            if (state.number < state.maxValue && state.number >= state.startValue) {
+
+            if (state.value < state.maxValue && state.value >= state.startValue) {
                 return {
                     ...state,
-                    number: state.number + 1
+                    value: state.value + 1
                 }
             } else {
                 return state
@@ -92,7 +93,7 @@ export const tabloReducer = (state: InitialStateType = initialState, action: Act
         case "CHANGE-RESET": {
             return {
                 ...state,
-                number: state.startValue
+                value: state.startValue
             }
         }
 

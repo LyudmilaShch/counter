@@ -1,5 +1,5 @@
 import {combineReducers, compose, legacy_createStore} from 'redux'
-import {loadState, saveState, tabloReducer} from "./tablo-reducer";
+import {loadState, saveState, counterReducer} from "./counter-reducer";
 
 
 declare global {
@@ -10,7 +10,7 @@ declare global {
 // объединяя reducer-ы с помощью combineReducers,
 // мы задаём структуру нашего единственного объекта-состояния
 const rootReducer = combineReducers({
-    tablo: tabloReducer ,
+    counter: counterReducer ,
 })
 
 //const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

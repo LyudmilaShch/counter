@@ -7,21 +7,21 @@ import {
     changeIncAC,
     changeResetAC, loadState, saveState,
 
-} from "./store/tablo-reducer";
+} from "./store/counter-reducer";
 import {AppRootStateType, store} from "./store/store";
 import {useDispatch, useSelector} from "react-redux";
-import {changeMaxValueAC, changeSettingAC, changeSettingValueAC, changeStartValueAC} from "./store/tablo-reducer";
+import {changeMaxValueAC, changeSettingAC, changeSettingValueAC, changeStartValueAC} from "./store/counter-reducer";
 
-export type TabloType = {
+export type CounterType = {
     startValue: number
     maxValue: number
     error: string | null
     message: string | null
-    number: number
+    value: number
 }
 
 function AppWithRedux() {
-    const tablo = useSelector<AppRootStateType, TabloType>(state => state.tablo)
+    const counter = useSelector<AppRootStateType, CounterType>(state => state.counter)
     const dispatch = useDispatch()
     // useEffect(() => {
     //     let newMaxValue = localStorage.getItem('maxValueKey')
@@ -29,6 +29,7 @@ function AppWithRedux() {
     //         setMaxValue(JSON.parse(newMaxValue))
     //     }
     //     let newStartValue = localStorage.getItem('startValueKey')
+
     //     if (newStartValue) {
     //         setStartValue(JSON.parse(newStartValue))
     //         setNumber(JSON.parse(newStartValue))
@@ -46,8 +47,8 @@ function AppWithRedux() {
 
         store.subscribe(() => {
             saveState({
-                maxValue: store.getState().tablo.maxValue,
-                startValue: store.getState().tablo.startValue,
+                maxValue: store.getState().counter.maxValue,
+                startValue: store.getState().counter.startValue,
             });
         });
         // localStorage.setItem('startValueKey', JSON.stringify(tablo.startValue))
@@ -64,9 +65,9 @@ function AppWithRedux() {
     }
 
 
-    const displayValueOnTablo = tablo.error
-        ? tablo.error
-        : tablo.message ? tablo.message : tablo.number
+    const displayValueOnCounter = counter.error
+        ? counter.error
+        : counter.message ? counter.message : counter.value
 
 
     return (
@@ -74,24 +75,24 @@ function AppWithRedux() {
         <div className="Setting">
             <div className="nameInput">
                 <div><b>max value</b></div>
-                <Value newValue={changeMaxValue} value={tablo.maxValue} error={tablo.error}/>
+                <Value newValue={changeMaxValue} value={counter.maxValue} error={counter.error}/>
             </div>
             <div className="nameInput">
                 <div><b>start value</b></div>
-                <Value newValue={changeStartValue} value={tablo.startValue} error={tablo.error}/>
+                <Value newValue={changeStartValue} value={counter.startValue} error={counter.error}/>
             </div>
 
             <div className="ButtonsContainer">
-                <Button name={'set'} callBack={onClickSet} disabledButton={!!tablo.error}/>
+                <Button name={'set'} callBack={onClickSet} disabledButton={!!counter.error}/>
             </div>
         </div>
         <div className="Tablo">
-            <Tablo tablo={displayValueOnTablo} maxValue={tablo.maxValue} isError={!!tablo.error}/>
+            <Tablo tablo={displayValueOnCounter} maxValue={counter.maxValue} isError={!!counter.error}/>
             <div className="ButtonsContainer">
                 <Button name={'inc'} callBack={onClickInc}
-                        disabledButton={tablo.error ? true : tablo.message ? true : tablo.number >= tablo.maxValue}/>
+                        disabledButton={counter.error ? true : counter.message ? true : counter.value >= counter.maxValue}/>
                 <Button name={'reset'} callBack={onClickReset}
-                        disabledButton={tablo.error ? true : tablo.message ? true : tablo.number === tablo.startValue}/>
+                        disabledButton={counter.error ? true : counter.message ? true : counter.value === counter.startValue}/>
             </div>
         </div>
         </body>
