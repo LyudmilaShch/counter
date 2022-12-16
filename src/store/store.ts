@@ -1,27 +1,26 @@
-import {combineReducers, compose, legacy_createStore} from 'redux'
-import {loadState, saveState, counterReducer} from "./counter-reducer";
-
+import {applyMiddleware, combineReducers, compose, legacy_createStore} from 'redux'
+import {counterReducer} from "./counter-reducer";
+import thunk from "redux-thunk";
+import {loadState, saveState} from '../utils/localStorage-utils';
 
 declare global {
     interface Window {
         __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
     }
 }
-// объединяя reducer-ы с помощью combineReducers,
-// мы задаём структуру нашего единственного объекта-состояния
 const rootReducer = combineReducers({
     counter: counterReducer ,
 })
 
-//const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-// непосредственно создаём store
-const persistedState = loadState();
-export const store = legacy_createStore(rootReducer, persistedState);
+export const store = legacy_createStore(rootReducer, loadState(), applyMiddleware(thunk));
 
-// определить автоматически тип всего объекта состояния
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
+store.subscribe(() => {
+    saveState({
+        counter: store.getState().counter
+    });
+})
 
-// а это, чтобы можно было в консоли браузера обращаться к store в любой момент
 // @ts-ignore
 window.store = store

@@ -5,8 +5,6 @@ type changeSettingActionType = ReturnType<typeof changeSettingAC>
 type changeIncActionType = ReturnType<typeof changeIncAC>
 type changeResetActionType = ReturnType<typeof changeResetAC>
 
-
-
 type ActionType =
     changeStartValueActionType
     | changeMaxValueActionType
@@ -29,7 +27,7 @@ export type InitialStateType = {
     maxValue: any
     error: string | null
     message: string | null
-    value  : number
+    value: number
 }
 export const counterReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
@@ -80,7 +78,6 @@ export const counterReducer = (state: InitialStateType = initialState, action: A
             }
         }
         case "CHANGE-INC": {
-
             if (state.value < state.maxValue && state.value >= state.startValue) {
                 return {
                     ...state,
@@ -96,7 +93,6 @@ export const counterReducer = (state: InitialStateType = initialState, action: A
                 value: state.startValue
             }
         }
-
         default:
             return state
     }
@@ -122,32 +118,4 @@ export const changeResetAC = () => {
 }
 
 
-export const loadState = () => {
-    try {
-        const newMaxValue = localStorage.getItem('maxValueKey');
-        if (newMaxValue) {
-            return JSON.parse(newMaxValue)
 
-        }
-        // let newStartValue = localStorage.getItem('startValueKey')
-        // if (newStartValue) {
-        //     return JSON.parse(newStartValue)
-        // }
-    } catch (err) {
-
-        return undefined;
-    }
-};
-
-export const saveState = (state: {maxValue: number, startValue: number} ) => {
-    try {
-        const newMaxValue = JSON.stringify(state.maxValue);
-        const newStartValue = JSON.stringify(state.startValue);
-        localStorage.setItem('maxValueKey', newMaxValue);
-        localStorage.setItem('startValueKey', newStartValue);
-    } catch {
-        // ignore write errors
-    }
-
-
-};
